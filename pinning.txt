@@ -1,0 +1,39 @@
+pinning for flashing a SOIC FLASH like MX25L1006E
+using the old raspi-pi1, as it is good enough for beeing a spi-flasher
+for the rest of its live:-)
+
+As I dont like to kill a workstation, I document it well.
+--------------------------------------------------
+
+RPI-signal 	RPi pin		SOP-8 pin	SPI flash
+CE0		24		1		/CS
+MISO		21		2		DO
+VCC 3.3V	17		3		/WP
+GND		25		4		GND
+MOSI		19		5		DI
+SCLK		23		6		SCK
+VCC 3.3V	(1)		7 solderbridge	/HOLD
+VCC 3.3V	1		8 solderbridge	VCC 3.3V 
+
+Variant: control /WP with gpio to protect against accidential flashing 
+BCM17		11		3		/WP
+
+
+========================
+SPI FLASH
+========================
+soic        U
+/CS	1	8	VCC
+DO	2	7	/HOLD
+/WP	3	6	SCLK
+GND	4	5	DI
+
+
+
+----
+cmd:
+
+speed in kHz
+flashrom -p linux_spi:dev=/dev/spidev0.0,spispeed=1000
+
+
